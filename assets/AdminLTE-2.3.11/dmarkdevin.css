@@ -1,0 +1,207 @@
+
+.footerText, .text-center{
+    color: #f18918 !important;
+}
+
+span.footerText:hover, .text-center:hover, .sidebar:active, .sidebar:hover{
+    color: #FD550C !important;
+}
+
+.btn-primary{
+    background-color: #FD550C !important;
+    border: 1px solid #FD550C !important;
+}
+
+.pagination a.active{
+    background-color: #4CAF50 !important;
+    color: white;
+}
+
+.pagination a:hover:not(.active) {background-color: #ddd;}
+
+
+
+.box-primary{
+    border-top-color: #f18918 !important;
+}
+
+
+.navbar-login{
+    background: #f18918 !important;
+}
+
+.logo{
+    background:#f18918 !important;
+}
+
+ .user-header{
+background:#f18918 !important;
+ }
+
+
+.logo img{
+    width: 40%;
+    margin-left: 70px !important; 
+ 
+}
+.logo h4{
+    color: #fff !important;
+}
+.navbar{
+    background: #fff !important;
+    color: #222 !important;
+    border-bottom: 1px solid #e2e2e2 !important;
+}
+
+.navbar .fa,
+.navbar span,
+.sidebar-toggle{
+    color: #222 !important;
+}
+
+.sidebar-toggle:hover{
+    /*background: #f18918 !important;*/
+    background: #ddd !important;
+    color: #000 !important;
+}
+
+a{
+    /*color: #f18918 !important;*/
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+.x {
+	display:none;
+}
+
+.box-shadow{
+    box-shadow: 2px 2px 1px #888888;
+}
+
+ 
+
+#myImg {
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+#myImg:hover {opacity: 0.7;}
+
+/* The Modal (background) */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    padding-top: 100px; /* Location of the box */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.5); /* Black w/ opacity */
+}
+
+/* Modal Content (image) */
+.modal-contentx {
+    margin: auto;
+    display: block;
+    /*width: 80%;*/
+    /*max-width: 700px;*/
+    height: 400px;
+ 
+}
+
+/* Caption of Modal Image */
+#caption {
+    margin: auto;
+    display: block;
+    width: 80%;
+    max-width: 700px;
+    text-align: center;
+    color: #ccc;
+    padding: 10px 0;
+    height: 150px;
+}
+
+/* Add Animation */
+.modal-contentx, #caption {    
+    -webkit-animation-name: zoom;
+    -webkit-animation-duration: 0.6s;
+    animation-name: zoom;
+    animation-duration: 0.6s;
+}
+
+@-webkit-keyframes zoom {
+    from {-webkit-transform:scale(0)} 
+    to {-webkit-transform:scale(1)}
+}
+
+@keyframes zoom {
+    from {transform:scale(0)} 
+    to {transform:scale(1)}
+}
+
+/* The Close Button */
+.close {
+    position: absolute;
+    top: 35px;
+    right: 35px;
+    color: #f1f1f1;
+    font-size: 40px;
+    font-weight: bold;
+    transition: 0.3s;
+
+}
+
+.close:hover,
+.close:focus {
+    color: #bbb;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+
+.openx {
+    position: absolute;
+    top: 45px;
+    right: 35px;
+    color: #f1f1f1;
+    font-size: 40px;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.openx:hover,
+.openx:focus {
+    color: #bbb;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+
+
+
+/* 100% Image Width on Smaller Screens */
+@media only screen and (max-width: 700px){
+    .modal-content {
+        width: 100%;
+    }
+}
+
+
+
+
+/*help tool tip*/

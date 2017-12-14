@@ -45,7 +45,8 @@ class Alumni extends Controller
 		$data['title'] = 'Acquaintance';
 		is_alumni();
  		is_loggedin();
-		$query 			= "SELECT * FROM tbl_alumni";
+ 		$id = $_SESSION[ID];
+		$query 			= "SELECT * FROM tbl_alumni where id !='". $id."' ";
  		$data['list']	= $this->db->getQuery($query);
 		$data['count']	= $this->db->getCount($query);
 		$this->view('alumni/header',$data);
@@ -100,14 +101,26 @@ class Alumni extends Controller
 		$data['title'] = 'Update Profile';
 		is_alumni();
  		is_loggedin();
-		$id = $_SESSION[ID];
-		$alumni 		 = "SELECT * FROM tbl_alumni WHERE id='".$id."'";
- 		$data['alumnus']	 = $this->db->getFetch($alumni);
-		$data['alumni'] = $this->db->getCount($alumni);
-		// $data['country'] = country();
+		$id                   				= $_SESSION[ID];
+		$alumni 		      				= "SELECT * FROM tbl_alumni WHERE id='".$id."'";
+ 		$data['alumnus']     				= $this->db->getFetch($alumni);
+		$data['alumni']   	  				= $this->db->getCount($alumni);
+		$data['gender']       				= gender();
+		$data['civil_status'] 				= civil_status();
+		$data['degree']       				= degree();
+		$data['year']         				= year();
+		$data['employment_status']         	= employment_status();
+		$data['past_employment_status']    	= past_employment_status();
+		$data['sector']         		   	= sector();
+		$data['career_field']               = career_field();
+		$data['salary_range']            	= salary_range();
+		$data['work_status']             	= work_status();
+		$data['job_aligned']         		= job_aligned();
+		$data['location']           		= country();
+
 		// $career_field 		 = "SELECT * FROM tbl_career_field ";
  	// 	$data['career_field'] = $this->db->getQuery($career_field);
-		$data['alumni'] == true? '':redirect('alumni/index');
+		$data['alumni'] == true? '':redirect('alumni/update_profile');
 			
 		if (isset($_POST['submit']) )  {
 		// -------------------------------------------------------------
@@ -121,11 +134,59 @@ class Alumni extends Controller
 
 		if($check>0){
 				$Data = array(
-					// 'name' 			=> $_POST['name'],
-					// 'email' 		=> $_POST['email'],
-					// 'degree' 		=> $_POST['degree'],
-					'password'		=> $newpassword,
-					// 'contact_number'=> $_POST['contact_number'] 
+					'alumni_id' 				=> $_POST['alumni_id'],
+					'name'              		=> $_POST['name'],
+					'mailing_address'   		=> $_POST['mailing_address'],
+					'gender'            		=> $_POST['gender'],
+					'date_of_birth'     		=> $_POST['date_of_birth'],
+					'place_of_birth'            => $_POST['place_of_birth'],
+					'home_address'				=> $_POST['home_address'],
+					'citizenship'				=> $_POST['citizenship'],
+					'civil_status'      		=> $_POST['civil_status'],
+					'email' 		    		=> $_POST['email'],
+					'contact_number'    		=> $_POST['contact_number'],
+					'location'		            => $_POST['location'],
+
+					'elementary'        		=> $_POST['elementary'],
+					'secondary'         		=> $_POST['secondary'],
+					'tertiary'          		=> $_POST['tertiary'],
+					'degree' 		    		=> $_POST['degree'],
+					'year_graduated'    		=> $_POST['year_graduated'],
+					'date_of_graduation'        => $_POST['date_of_graduation'],
+
+					'employment_status'   		=> $_POST['employment_status'],
+					'year_hired_or_fired' 		=> $_POST['year_hired_or_fired'],
+					'sector'              		=> $_POST['sector'],
+					'career_field' 	      		=> $_POST['career_field'],
+					'work_status'         		=> $_POST['work_status'],
+					'is_job_aligned'      		=> $_POST['is_job_aligned'],
+					'position'         	  		=> $_POST['position'],
+					'salary_range'        		=> $_POST['salary_range'],
+					'company_name'        		=> $_POST['company_name'],
+					'company_address'           => $_POST['company_address'],
+
+					'past_employment_status'    => $_POST['past_employment_status'],
+					'past_year_hired_or_fired'  => $_POST['past_year_hired_or_fired'],
+					'past_sector'               => $_POST['past_sector'],
+					'past_career_field' 	    => $_POST['past_career_field'],
+					'past_work_status'          => $_POST['past_work_status'],
+					'is_past_job_aligned'       => $_POST['is_past_job_aligned'],
+					'past_position'             => $_POST['past_position'],
+					'past_salary_range'         => $_POST['past_salary_range'],
+					'past_company_name'         => $_POST['past_company_name'],
+					'past_company_address'      => $_POST['past_company_address'],
+
+					'award'                     => $_POST['award'],
+					'date_given'                => $_POST['date_given'],
+					'awarding_body'             => $_POST['awarding_body'],
+
+					'testimony_personal_family' => $_POST['testimony_personal_family'],
+					'testimony_career'          => $_POST['testimony_career'],
+					'testimony_community'       => $_POST['testimony_community'],
+
+					'recovery_email'            => $_POST['recovery_email'],
+					'username'                  => $_POST['username'],
+					'password'		            => $newpassword,
 				);
 
 
@@ -135,9 +196,10 @@ class Alumni extends Controller
 				$success[] =  "Save Succesfully!";
 				$data['success'] = $success;
  				$alumni 		 = "SELECT * FROM tbl_alumni WHERE id='".$id."'";
- 				$data['alumnus']	 = $this->db->getFetch($alumni);
+ 				$data['alumnus'] = $this->db->getFetch($alumni);
 				$_SESSION[NAME]  =  ucwords($data['alumnus']['name']);
 				$_SESSION[EMAIL] =  strtolower($data['alumnus']['email']);
+
 			}else{
 				$error[] =  "Something Wrong,Please Contact System Administrator";
 				$data['error'] = $error;
@@ -156,78 +218,7 @@ class Alumni extends Controller
 	}
 
 
-	public function update_profile1(){
-		$data['title'] = 'Update Profile';
-		is_alumni();
- 		is_loggedin();
-		$id = $_SESSION[ID];
-		$alumni 		 = "SELECT * FROM tbl_alumni WHERE id='".$id."'";
- 		$data['alumnus']	 = $this->db->getFetch($alumni);
-		$data['alumni'] = $this->db->getCount($alumni);
-		// $data['country'] = country();
-		// $career_field 		 = "SELECT * FROM tbl_career_field ";
- 	// 	$data['career_field'] = $this->db->getQuery($career_field);
-		$data['alumni'] == true? '':redirect('alumni/index');
-			
-		if (isset($_POST['submit']) )  {
-		// -------------------------------------------------------------
-			if(empty($_POST['newpassword'])){
-				$newpassword = $data['alumnus']['password'];				
-			}else{
-				$newpassword = md5($_POST['newpassword']);
-			}
-			$confirmpassword = md5($_POST['confirmpassword']);
-			$check = $this->db->getCount("SELECT * FROM tbl_alumni WHERE id ='". $id."' AND password ='".$confirmpassword."' ");
 
-		if($check>0){
-				$Data = array(
-					'name' 			=> $_POST['name'],
-					'email' 		=> $_POST['email'],
-					
-					'password'		=> $newpassword,
-					// 'contact_number'=> $_POST['contact_number'] 
-				);
-
-
-			$edit   = $this->db->update('tbl_alumni',$Data,array('id' => $id ));
-			// $delete = $this->db->delete('tbl_salary_range' ,array('alumni_id' => $id));
-
-			// // ------------------------------------------
-			// if(isset($_POST['career_field'])):
-			// foreach ($_POST['career_field'] as $career_field) {
-			// 	$Data = array(
-			// 		'alumni_id'=> $data['alumnus']['id'],
-			// 		'career_field_id'=> $career_field
-			// 	);
-			// 	$add = $this->db->insert('tbl_salary_range' ,$Data);
-			// 	// $edit = $this->db->update('tbl_image',$Data,array('id' => $image['id'] ));
-			// }
-			// endif;
-			// // ------------------------------------------
-
-			if($edit){
-				$success[] =  "Save Succesfully!";
-				$data['success'] = $success;
- 				$alumni 		 = "SELECT * FROM tbl_alumni WHERE id='".$id."'";
- 				$data['alumnus']	 = $this->db->getFetch($alumni);
-				$_SESSION[NAME]  =  ucwords($data['alumnus']['name']);
-				$_SESSION[EMAIL] =  strtolower($data['alumnus']['email']);
-			}else{
-				$error[] =  "Something Wrong,Please Contact System Administrator";
-				$data['error'] = $error;
-			}	
-		}else{
-			$error[] =  "Wrong Current Password";
-			$data['error'] = $error;
-		}
-
-		// -------------------------------------------------------------
-
-		}
-		$this->view('alumni/header',$data);
-		$this->view('alumni/update_profile1',$data);
-		$this->view('alumni/footer');
-	}
 
 	public function forgot_password(){
 		 	 
@@ -249,9 +240,9 @@ class Alumni extends Controller
 				$data['error'] = $error;
 			}
 		}
-		$this->view('admins/main/header');
+		$this->view('alumni/main/header');
 		$this->view('alumni/forgot_password',$data);
-		$this->view('admins/main/footer'); 
+		$this->view('alumni/main/footer'); 
 	}
 
 	public function reset_password(){

@@ -43,9 +43,10 @@ class Admins extends Controller
 		$data['title'] = 'Add Alumni';
         is_admin();
         is_loggedin();
-       
+        $data['gender']         = gender();
+		$data['year_graduated'] = year();
         $data['alumni']         = array();
-            
+        
 
         if (isset($_POST['submit']) )  {
             $Data = array(
@@ -53,10 +54,10 @@ class Admins extends Controller
                 'name'            => $_POST['name'],
                 'email'           => $_POST['email'],
                 'contact_number'  => $_POST['contact_number'],
-                'date_of_birth'   => $_POST['date_of_birth'],
                 'gender'          => $_POST['gender'],
-                // 'year_graduated'  => $_POST['year_graduated'],
-                
+                'date_of_birth'   => $_POST['date_of_birth'],
+                'year_graduated'  => $_POST['year_graduated'],
+                'tertiary'        => "Cebu Institute of Technology - University",
                 'password'        => md5($_POST['alumni_id']),
                 'type'            => "alumni",
                 'active'          => 1,
@@ -96,8 +97,173 @@ class Admins extends Controller
             $this->view('admins/footer');
       }
 
-	public function update_alumni(){
+    public function import_alumni(){
+    	$data['title'] = 'Import Alumni';
+        is_admin();
+        is_loggedin();
+    	
+		if(isset($_POST['import'])){
+			if($_FILES['file']['error']==0){
+				$name = basename($_FILES['file']['name']);
+				$size = $_FILES['file']['size'];
+				$type = $_FILES['file']['type'];
+				$ext = substr($name,strrpos($name,".")+1);
+				if(($size/1024/1024)<1){
+					if($type=="application/vnd.ms-excel"){
+						if ( isset( $_FILES['file'] ) ){
+						$csv_file = $_FILES['file']['tmp_name'];
+							if ( ! is_file( $csv_file ) )
+							exit('File not found.');
+							$sql = '';
+							if (($handle = fopen( $csv_file, "r")) !== FALSE){
+							 	  $headers = fgetcsv($handle, 1000, ",");
+								while (($datax = fgetcsv($handle, 1000, ",")) !== FALSE){
+		 
+ 
+						 		$sql = "SELECT * FROM tbl_alumni WHERE  name=:name ";
+						        $query = $this->db->conn->prepare($sql);
+						        $query->bindValue(':name', ($datax[0]), PDO::PARAM_STR);
+						        $query->execute();
+						        $variable = $query->rowCount();
+						        $alumni = $query->fetch();
 
+
+							  if( $variable == 0    ){
+								$field = array(
+									'active'=>1,
+									'type'=>'alumni',
+									'alumni_id' => ($datax[0]),
+									'name'=>($datax[1]),
+									'email'=>($datax[2]),
+									'contact_number'=>($datax[3]),
+									'gender'=>($datax[4]),
+									'date_of_birth'=>($datax[5]),
+									'year_graduated'=>($datax[6]),
+									'tertiary'        => "Cebu Institute of Technology - University",
+									'password' =>md5(($datax[0])),
+									'token'    => md5(($datax[2])),
+									
+									);
+												 
+	 
+													// echo $datax[0].'<br>';
+							$add = $this->db->insert('tbl_alumni',$field);
+							$lastID = $this->db->conn->lastInsertId();
+
+							if($lastID == 0){
+								$lastID = 1;
+							}
+
+  
+							if(isset($datax[2])):
+
+								$pieces = explode(',', $datax[2]);
+							// foreach($pieces as $element)
+							// {
+							//  	$sql = "SELECT * FROM tbl_materials WHERE  name=:name ";
+						 //        $query = $this->db->conn->prepare($sql);
+						 //        $query->bindValue(':name', ($element), PDO::PARAM_STR);
+						 //        $query->execute();
+						 //        $variable = $query->rowCount();
+						 //        $materials = $query->fetch();
+
+
+							// 	if($variable > 0){
+							// 			$Data = array(
+							// 			'member_id'=> $lastID,
+							// 			'material_id'=> $materials['id']
+							// 			);
+							// 		$add_material = $this->db->insert('tbl_members_material' ,$Data);
+							// 	}else{
+									
+							// 	}
+
+							// }
+							endif;
+							$errors[] = ("yyy");
+							$data['errors'] = $errors;
+
+
+ 
+						}else{
+							$field = array(
+								'active'=>1,
+								'type'=>'alumni',
+								'alumni_id' => ($datax[0]),
+								'name'=>($datax[1]),
+								'email'=>($datax[2]),
+								'contact_number'=>($datax[3]),
+								'gender'=>($datax[4]),
+								'date_of_birth'=>($datax[5]),
+								'year_graduated'=>($datax[6]),
+								'tertiary'       => "Cebu Institute of Technology - University",
+								'password' =>md5(($datax[0])),
+								'token'    => md5(($datax[2]))
+
+								);
+
+ 
+							$edit = $this->db->update('tbl_alumni',$field,array('id' => $alumni['id'] ));
+							// $delete =  $this->db->delete('tbl_members_material' ,array('member_id' => $alumni['id']));
+
+							// ------------------------------------------
+							if(isset($datax[2])):
+							$pieces = explode(',', $datax[2]);
+							// foreach($pieces as $element)
+							// {
+
+							// 	$sql = "SELECT * FROM tbl_materials WHERE  name=:name ";
+							// 	$query = $this->db->conn->prepare($sql);
+							// 	$query->bindValue(':name', ($element), PDO::PARAM_STR);
+							// 	$query->execute();
+							// 	$variable = $query->rowCount();
+							// 	$materials = $query->fetch();
+
+
+							// 	if($variable > 0){
+							// 		$Data = array(
+							// 		'member_id'=> $alumni['id'],
+							// 		'material_id'=> $materials['id']
+							// 		);
+							// 		$add_material = $this->db->insert('tbl_members_material' ,$Data);
+								 
+							// 	}else{
+								 
+							// 	}
+
+
+							// }
+							endif;
+							// ------------------------------------------
+							}
+
+							// ==============================
+								}
+								// redirect('administrator/import');
+								fclose($handle);
+							}
+						}
+					}else{
+						$errors[] = ("Invalid file");
+						$data['errors'] = $errors;
+					}
+				}else{
+					$errors[] = ("You reached file limit 1 mb");
+					$data['errors'] = $errors;
+				}
+			}else{
+				$errors[] = ("File upload error");
+				$data['errors'] = $errors;
+			}
+		}
+
+    	$this->view('admins/header',$data);
+		$this->view('admins/import_alumni',$data);
+		$this->view('admins/footer');
+    }
+
+	public function update_alumni(){
+		$data['title'] = 'Update Alumni';
 		is_admin();
 		is_loggedin();
 		isset($this->url[2]) ? '':redirect('alumni/lists');
@@ -105,7 +271,8 @@ class Admins extends Controller
  		$alumni 		 	= "SELECT * FROM tbl_alumni WHERE id='".$id."'";
  		$data['alumnus']	= $this->db->getFetch($alumni);
 		$data['alumni'] 	= $this->db->getCount($alumni);
-		
+		$data['gender']     = gender();
+		$data['year_graduated']     = year();
 		$data['alumni'] 	== true? '':redirect('admins/alumni');
 		$newimage = '';
 
@@ -119,7 +286,9 @@ class Admins extends Controller
 				'name' 				=> $_POST['name'],
 				'email' 			=> $_POST['email'],
 				'contact_number' 	=> $_POST['contact_number'],
+				'date_of_birth'     => $_POST['date_of_birth'],
 				'gender' 	        => $_POST['gender'],
+				'year_graduated'    => $_POST['year_graduated']
 				);
 
 
@@ -131,6 +300,7 @@ class Admins extends Controller
 				$success[] =  "Save Succesfully!";
 				$data['success'] = $success;
 
+				$alumni 		 	= "SELECT * FROM tbl_alumni WHERE alumni_id='".$Data['alumni_id']."'";
 				$data['alumnus']	 = $this->db->getFetch($alumni);
 				
 
@@ -298,7 +468,9 @@ class Admins extends Controller
  		$data['admin']	 = $this->db->getFetch($admins);
 		$data['admins']  = $this->db->getCount($admins);
 		$data['country'] = country();
-		$data['admins']  == true? '':redirect('admins/index');
+		$data['gender']  = gender();
+		$data['department']  = department();
+		$data['admins']  == true? '':redirect('admins/update_profile');
 			
 		if (isset($_POST['submit']) )  {
 		// -------------------------------------------------------------
@@ -319,7 +491,8 @@ class Admins extends Controller
 				'email' 		 => $_POST['email'],
 				'password'		 => $newpassword,
 				'contact_number' => $_POST['contact_number'],
-				'department' 	 => $_POST['department']
+				'department' 	 => $_POST['department'],
+				'location'		 => $_POST['country']
 			);
 			$edit = $this->db->update('tbl_admins',$Data,array('id' => $id ));
 

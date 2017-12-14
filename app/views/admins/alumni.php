@@ -18,7 +18,7 @@
 
         
 
-        <?=add_button('admins/import','Import Alumni');?>&nbsp;
+        <?=add_button('admins/import_alumni','Import Alumni');?>&nbsp;
         <?=add_button('admins/add_alumni','Add Alumni');?>
         
       

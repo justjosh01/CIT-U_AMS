@@ -35,7 +35,7 @@
           </tr>
           </thead>
           <tbody>
-          <?php foreach ($data['list'] as $key => $value) { ?>
+          <?php foreach ($data['admin'] as $key => $value) { ?>
           <tr>
 
             <td><?=($value['id']);?></td>

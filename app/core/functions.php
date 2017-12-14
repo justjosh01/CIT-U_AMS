@@ -401,7 +401,207 @@ function readmore($string, $word_limit = 5){
     return true;
   }
 
-  function country(){
+
+
+function year(){
+	$yearList = array(
+	    "2019" => "2019",
+	    "2018" => "2018",
+	    "2017" => "2017",
+	    "2016" => "2016",
+	    "2015" => "2015",
+	    "2014" => "2014",
+	    "2013" => "2013",
+	    "2012" => "2012",
+	    "2011" => "2011",
+	    "2010" => "2010",
+	    "2009" => "2009",
+	    "2008" => "2008",
+	    "2007" => "2007",
+	    "2006" => "2006",
+	    "2005" => "2005",
+	    "2004" => "2004",
+	    "2003" => "2003",
+	    "2002" => "2002",
+	    "2001" => "2001",
+	    "2000" => "2000",
+	    "1999" => "1999",
+	    "1998" => "1998",
+	    "1997" => "1997",
+	    "1996" => "1996",
+	    "1995" => "1995",
+	    "1994" => "1994",
+	    "1993" => "1993",
+	    "1992" => "1992",
+	    "1991" => "1991",
+	    "1990" => "1990",
+	    "1989" => "1989",
+	    "1988" => "1988",
+	    "1987" => "1987",
+	    "1986" => "1986",
+	    "1985" => "1985",
+	    "1984" => "1984",
+	    "1983" => "1983",
+	    "1982" => "1982",
+	    "1981" => "1981",
+	    "1980" => "1980",
+	    "1979" => "1979",
+	    "1978" => "1978",
+	    "1977" => "1977",
+	    "1976" => "1976",
+	    "1975" => "1975",
+	    "1974" => "1974",
+	    "1973" => "1973",
+	    "1972" => "1972",
+	    "1971" => "1971",
+	    "1970" => "1970",
+	    "1969" => "1969",
+	    "1968" => "1968",
+	    "1967" => "1967",
+	    "1966" => "1966",
+	    "1965" => "1965",
+	    "1964" => "1964",
+	    "1963" => "1963",
+	    "1962" => "1962",
+	    "1961" => "1961",
+	    "1960" => "1960",
+	    "1959" => "1959",
+	    "1958" => "1958",
+	    "1957" => "1957",
+	    "1956" => "1956",
+	    "1955" => "1955",
+	    "1954" => "1954",
+	    "1953" => "1953",
+	    "1952" => "1952",
+	    "1951" => "1951",
+	    "1950" => "1950",
+	    "1949" => "1949",
+	    "1948" => "1948",
+	    "1947" => "1947"
+	);
+	return $yearList;
+
+}
+
+function department(){
+	$departmentList = array(
+		"IT"  => "Information Technology",
+		"CS"  => "Computer Science",
+		"CpE" => "Computer Engineering",
+		"ME"  => "Mechanical Engineering",
+		"CE"  => "Civil Engineering",
+	);
+	return $departmentList;
+}
+
+function degree(){
+	$degreeList = array(
+	 	"BSIT"  => "Bachelor of Science in Information Technology",
+	 	"BSCS"  => "Bachelor of Science in Computer Science",
+	 	"BSCpE" => "Bachelor of Science in Computer Engineering",
+	 	"BSME"  => "Bachelor of Science in Mechanical Engineering",
+	 	"BSCE"  => "Bachelor of Science in Civil Engineering",
+	);
+	return $degreeList;
+
+}
+
+function salary_range(){
+	$salary_rangeList = array(
+		"5,000 - 20,000",
+		"21,000 - 35,000",
+		"36,000 - 50,000",
+		"51,000 - 65,000",
+		"66,000 - 80,000",
+		"81,000 - 95,000",
+	);
+	return $salary_rangeList;
+}
+
+function career_field(){
+	$career_fieldList = array(
+		"Agriculture, Food, & Natural Resources",
+		"Business, Management, & Administration",
+		"Communications & Information Systems",
+		"Engineering, Manufacturing, & Technology",
+		"Health Science Technology",
+		"Human Services"
+	);
+	return $career_fieldList;
+}
+
+function work_status(){
+	$work_statusList = array(
+		"Permanent"     => "Permanent",
+		"Temporary"     => "Temporary",
+		"Contractual"   => "Contractual",
+		"Self-employed" => "Self-employed"
+	);
+	return $work_statusList;
+}
+
+function sector(){
+	$sectorList = array(
+		"Government"     => "Government",
+		"Academe"        => "Academe",
+		"Private"        => "Private",
+		"NGO/Foundation" => "NGO/Foundation",
+		"Self-employed"  => "Self-employed"
+	);
+	return $sectorList;
+}
+
+function civil_status(){
+	$civil_statusList = array(
+		"Single"    => "Single",
+		"Married"   => "Married",
+		"Separated" => "Separated",
+		"Widow"     => "Widow",
+		"Deceased"  => "Deceased"
+	);
+	return $civil_statusList;
+
+}
+
+function job_aligned(){
+	$job_alignedList = array(
+		"No" ,
+		"Yes"
+	);
+	return $job_alignedList;
+
+}
+
+function past_employment_status(){
+	$past_employment_statusList = array(
+		"Employed, locally" => "Employed, locally" ,
+		"Employed, abroad"  => "Employed, abroad",
+		"Self-employed"     => "Self-employed"
+	);
+	return $past_employment_statusList;
+
+}
+
+function employment_status(){
+	$employment_statusList = array(
+		"Employed"   => "Employed",
+		"Unemployed" => "Unemployed"
+	);
+	return $employment_statusList;
+
+}
+
+
+function gender(){
+	$genderList = array(
+	  "Male" => "Male",
+	  "Female" => "Female",
+	  "Others" => "Others"
+	);
+   return $genderList;
+}
+
+function country(){
 
 
 		$countryList = array(
@@ -669,10 +869,12 @@ function readmore($string, $word_limit = 5){
 		"ZM" => "Zambia",
 		"ZW" => "Zimbabwe",
 		"AX" => "Åland Islands",
-		);
+	);
  	return $countryList;
 
-  }
+ }
+
+
 function add_button($location,$message){
 $a ='<a class="btn btn-success btn-flat btn-sm pull-right" title="" tooltip href="'.URL_ROOT.$location.'" >
         <i class="fa fa-user-plus"></i> '.$message.'</a> ';

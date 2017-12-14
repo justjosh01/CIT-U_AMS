@@ -12,14 +12,11 @@ class Super_admin extends Controller
 		is_super_admin();
 		is_loggedin();
 		$alumni 			= "SELECT * FROM tbl_alumni";
- 		$data['list']		= $this->db->getQuery($alumni);
+ 		$data['alumnus']		= $this->db->getQuery($alumni);
 		$data['alumni']	= $this->db->getCount($alumni);
 		$admins 			= "SELECT * FROM tbl_admins";
  		$data['admins']		= $this->db->getCount($admins);
-		// $annoucements 			= "SELECT * FROM tbl_annoucements";
- 	// 	$data['annoucements']	= $this->db->getCount($annoucements);
-		// $events 		= "SELECT * FROM tbl_quotation	";
- 	// 	$data['events']	= $this->db->getCount($events);
+
 		$this->view('super_admin/header',$data);
 		$this->view('super_admin/index',$data);
 		$this->view('super_admin/footer');
@@ -29,27 +26,31 @@ class Super_admin extends Controller
 		is_super_admin();
 		is_loggedin();
 		$query 			= "SELECT * FROM tbl_alumni";
- 		$data['list']	= $this->db->getQuery($query);
-		$data['count']	= $this->db->getCount($query);
+ 		$data['alumnus']	= $this->db->getQuery($query);
+		$data['alumni']	= $this->db->getCount($query);
 		$this->view('super_admin/header',$data);
 		$this->view('super_admin/alumni',$data);
 		$this->view('super_admin/footer');
 	}
 	public function add_alumni(){
-
+		$data['title'] = 'Add Alumni';
 		is_super_admin();
 		is_loggedin();
-		$data['alumni']	 	= array();
+		$data['gender']           = gender();
+		$data['year_graduated']   = year();
+		$data['alumni']	 	      = array();
 		
 
 		if (isset($_POST['submit']) )  {
 			$Data = array(
-				
+				'alumni_id' 	    => $_POST['alumni_id'],
 				'name' 				=> $_POST['name'],
 				'email' 			=> $_POST['email'],
-				'password' 			=> md5($_POST['password']),
+				'password' 			=> md5($_POST['alumni_id']),
 				'contact_number' 	=> $_POST['contact_number'],
-				'address' 			=> $_POST['address'],
+				'date_of_birth' 	=> $_POST['date_of_birth'],
+				'gender' 			=> $_POST['gender'],
+				'year_graduated' 	=> $_POST['year_graduated'],
 				'type' 		=> "alumni",
 				'active' 	=> 1,
 				'token'		=> md5($_POST['email'].uniqid(rand()))
@@ -78,6 +79,9 @@ class Super_admin extends Controller
 				if($add){
 					$success[] =  "Save Succesfully!";
 					$data['success'] = $success;
+
+					$alumni 		 	= "SELECT * FROM tbl_alumni WHERE alumni_id='".$Data['alumni_id']."'";
+                    $data['alumnus']	 = $this->db->getFetch($alumni);
 				}else{
 					$error[] =  "Something Wrong,Please Contact System Administrator";
 					$data['error'] = $error;
@@ -91,9 +95,174 @@ class Super_admin extends Controller
 		$this->view('super_admin/alumni/form',$data);
 		$this->view('super_admin/footer');
 	}
+
+	 public function import_alumni(){
+    	$data['title'] = 'Import Alumni';
+        is_super_admin();
+        is_loggedin();
+    	
+		if(isset($_POST['import'])){
+			if($_FILES['file']['error']==0){
+				$name = basename($_FILES['file']['name']);
+				$size = $_FILES['file']['size'];
+				$type = $_FILES['file']['type'];
+				$ext = substr($name,strrpos($name,".")+1);
+				if(($size/1024/1024)<1){
+					if($type=="application/vnd.ms-excel"){
+						if ( isset( $_FILES['file'] ) ){
+						$csv_file = $_FILES['file']['tmp_name'];
+							if ( ! is_file( $csv_file ) )
+							exit('File not found.');
+							$sql = '';
+							if (($handle = fopen( $csv_file, "r")) !== FALSE){
+							 	  $headers = fgetcsv($handle, 1000, ",");
+								while (($datax = fgetcsv($handle, 1000, ",")) !== FALSE){
+		 
+ 
+						 		$sql = "SELECT * FROM tbl_alumni WHERE  name=:name ";
+						        $query = $this->db->conn->prepare($sql);
+						        $query->bindValue(':name', ($datax[0]), PDO::PARAM_STR);
+						        $query->execute();
+						        $variable = $query->rowCount();
+						        $alumni = $query->fetch();
+
+
+							  if( $variable == 0    ){
+								$field = array(
+									'active'=>1,
+									'type'=>'alumni',
+									'alumni_id' => ($datax[0]),
+									'name'=>($datax[1]),
+									'email'=>($datax[2]),
+									'contact_number'=>($datax[3]),
+									'gender'=>($datax[4]),
+									'date_of_birth'=>($datax[5]),
+									'year_graduated'=>($datax[6]),
+									'tertiary'        => "Cebu Institute of Technology - University",
+									'password' =>md5(($datax[0])),
+									'token'    => md5(($datax[2])),
+									
+									);
+												 
+	 
+													// echo $datax[0].'<br>';
+							$add = $this->db->insert('tbl_alumni',$field);
+							$lastID = $this->db->conn->lastInsertId();
+
+							if($lastID == 0){
+								$lastID = 1;
+							}
+
+  
+							if(isset($datax[2])):
+
+								$pieces = explode(',', $datax[2]);
+							// foreach($pieces as $element)
+							// {
+							//  	$sql = "SELECT * FROM tbl_materials WHERE  name=:name ";
+						 //        $query = $this->db->conn->prepare($sql);
+						 //        $query->bindValue(':name', ($element), PDO::PARAM_STR);
+						 //        $query->execute();
+						 //        $variable = $query->rowCount();
+						 //        $materials = $query->fetch();
+
+
+							// 	if($variable > 0){
+							// 			$Data = array(
+							// 			'member_id'=> $lastID,
+							// 			'material_id'=> $materials['id']
+							// 			);
+							// 		$add_material = $this->db->insert('tbl_members_material' ,$Data);
+							// 	}else{
+									
+							// 	}
+
+							// }
+							endif;
+							$errors[] = ("yyy");
+							$data['errors'] = $errors;
+
+
+ 
+						}else{
+							$field = array(
+								'active'=>1,
+								'type'=>'alumni',
+								'alumni_id' => ($datax[0]),
+								'name'=>($datax[1]),
+								'email'=>($datax[2]),
+								'contact_number'=>($datax[3]),
+								'gender'=>($datax[4]),
+								'date_of_birth'=>($datax[5]),
+								'year_graduated'=>($datax[6]),
+								'tertiary'       => "Cebu Institute of Technology - University",
+								'password' =>md5(($datax[0])),
+								'token'    => md5(($datax[2]))
+
+								);
+
+ 
+							$edit = $this->db->update('tbl_alumni',$field,array('id' => $alumni['id'] ));
+							// $delete =  $this->db->delete('tbl_members_material' ,array('member_id' => $alumni['id']));
+
+							// ------------------------------------------
+							if(isset($datax[2])):
+							$pieces = explode(',', $datax[2]);
+							// foreach($pieces as $element)
+							// {
+
+							// 	$sql = "SELECT * FROM tbl_materials WHERE  name=:name ";
+							// 	$query = $this->db->conn->prepare($sql);
+							// 	$query->bindValue(':name', ($element), PDO::PARAM_STR);
+							// 	$query->execute();
+							// 	$variable = $query->rowCount();
+							// 	$materials = $query->fetch();
+
+
+							// 	if($variable > 0){
+							// 		$Data = array(
+							// 		'member_id'=> $alumni['id'],
+							// 		'material_id'=> $materials['id']
+							// 		);
+							// 		$add_material = $this->db->insert('tbl_members_material' ,$Data);
+								 
+							// 	}else{
+								 
+							// 	}
+
+
+							// }
+							endif;
+							// ------------------------------------------
+							}
+
+							// ==============================
+								}
+								// redirect('administrator/import');
+								fclose($handle);
+							}
+						}
+					}else{
+						$errors[] = ("Invalid file");
+						$data['errors'] = $errors;
+					}
+				}else{
+					$errors[] = ("You reached file limit 1 mb");
+					$data['errors'] = $errors;
+				}
+			}else{
+				$errors[] = ("File upload error");
+				$data['errors'] = $errors;
+			}
+		}
+
+    	$this->view('super_admin/header',$data);
+		$this->view('super_admin/import_alumni',$data);
+		$this->view('super_admin/footer');
+    }
+
 	public function update_alumni(){
-
-
+		$data['title'] = 'Update Alumni';
 		is_super_admin();
 		is_loggedin();
 		isset($this->url[2]) ? '':redirect('alumni/lists');
@@ -101,7 +270,8 @@ class Super_admin extends Controller
  		$alumni 		 	= "SELECT * FROM tbl_alumni WHERE id='".$id."'";
  		$data['alumnus']	 	= $this->db->getFetch($alumni);
 		$data['alumni'] 	= $this->db->getCount($alumni);
-		
+		$data['gender']     = gender();
+		$data['year_graduated']     = year();
 		$data['alumni'] 	== true? '':redirect('super_admin/alumni');
 		$newimage = '';
 
@@ -110,12 +280,13 @@ class Super_admin extends Controller
 		$password = empty($_POST['password']) ?  $data['alumni']['password'] : md5($_POST['password']);
 
 			$Data = array(
-				
-				'password' 			=> $password,
+				'alumni_id' 		=> $_POST['alumni_id'],
 				'name' 				=> $_POST['name'],
 				'email' 			=> $_POST['email'],
 				'contact_number' 	=> $_POST['contact_number'],
-				
+				'date_of_birth'     => $_POST['date_of_birth'],
+				'gender' 	        => $_POST['gender'],
+				'year_graduated'    => $_POST['year_graduated']
 				);
 
 
@@ -126,7 +297,8 @@ class Super_admin extends Controller
 				$success[] =  "Save Succesfully!";
 				$data['success'] = $success;
 
-				$data['alumni']	 = $this->db->getFetch($alumni);
+				$alumni 		 	= "SELECT * FROM tbl_alumni WHERE alumni_id='".$Data['alumni_id']."'";
+                $data['alumnus']	= $this->db->getFetch($alumni);
 
 			}else{
 				$error[] =  "Something Wrong,Please Contact System Administrator";
@@ -171,16 +343,19 @@ class Super_admin extends Controller
 		is_super_admin();
 		is_loggedin();
 		$query 			= "SELECT * FROM tbl_admins";
- 		$data['list']	= $this->db->getQuery($query);
-		$data['count']	= $this->db->getCount($query);
+ 		$data['admin']	= $this->db->getQuery($query);
+		$data['admins']	= $this->db->getCount($query);
 		$this->view('super_admin/header',$data);
 		$this->view('super_admin/admins',$data);
 		$this->view('super_admin/footer');
 	}	
 	public function add_admin(){
-
+		$data['title'] = 'Add Admin';
 		is_super_admin();
 		is_loggedin();
+		$data['gender']     = gender();
+		$data['department'] = department();
+		$data['country']   = country();
 		$data['admin']	 	= array();
 		if (isset($_POST['submit']) )  {
 			$Data = array(
@@ -190,7 +365,8 @@ class Super_admin extends Controller
 				'date_of_birth'  => $_POST['date_of_birth'],
 				'email' 		 => $_POST['email'],
 				'contact_number' => $_POST['contact_number'],
-				'department' 	 => $_POST['department']
+				'department' 	 => $_POST['department'],
+				'location' 		 => $_POST['country'],
 				'password' 		 => md5($_POST['admin_id']),
 				'type' 		=> "admins",
 				'active' 	=> 1,
@@ -213,7 +389,8 @@ class Super_admin extends Controller
 					$success[] =  "Save Succesfully!";
 					$data['success'] = $success;
 
-
+					$admins		 	= "SELECT * FROM tbl_admins WHERE admin_id='".$Data['admin_id']."'";
+                    $data['admin']	= $this->db->getFetch($admins);
 				}else{
 					$error[] =  "Something Wrong,Please Contact System Administrator";
 					$data['error'] = $error;
@@ -228,8 +405,7 @@ class Super_admin extends Controller
 		$this->view('super_admin/footer');
 	}
 	public function update_admin(){
-
-
+		$data['title'] = 'Update Admin';
 		is_super_admin();
 		is_loggedin();
 		isset($this->url[2]) ? '':redirect('admins/lists');
@@ -238,6 +414,9 @@ class Super_admin extends Controller
  		$data['admin']	 	= $this->db->getFetch($admins);
 		$data['admins'] 	= $this->db->getCount($admins);
 		$data['admins'] 	== true? '':redirect('super_admin/admins');
+		$data['gender']     = gender();
+		$data['department'] = department();
+		$data['country']   = country();
 		$newimage = '';
 
  		if(isset($_POST['submit'])){
@@ -245,13 +424,15 @@ class Super_admin extends Controller
 		$password = empty($_POST['password']) ?  $data['admin']['password'] : md5($_POST['password']);
 
 			$Data = array(
-				
-				'password' 			=> $password,
-				'name' 				=> $_POST['name'],
-				'email' 			=> $_POST['email'],
-				'contact_number' 	=> $_POST['contact_number'],
-				
-				// 'image'				=> $newimage
+				'admin_id'       => $_POST['admin_id'],
+				'name' 			 => $_POST['name'],
+				'gender' 		 => $_POST['gender'],
+				'date_of_birth'  => $_POST['date_of_birth'],
+				'email' 		 => $_POST['email'],
+				'contact_number' => $_POST['contact_number'],
+				'department' 	 => $_POST['department'],
+				'location' 		 => $_POST['country'],
+				'password' 		 => $password,
 				);
 
 
@@ -406,13 +587,13 @@ class Super_admin extends Controller
 	
 
 	public function update_profile(){
-		 	 
+		$data['title'] = 'Update Profile';
 		is_super_admin();
 		is_loggedin();
 		$id = $_SESSION[ID];
 
-		$super_admin 		 = "SELECT * FROM tbl_super_admin WHERE id='".$id."'";
- 		$data['super_admins']	 = $this->db->getFetch($super_admin);
+		$super_admin 		  = "SELECT * FROM tbl_super_admin WHERE id='".$id."'";
+ 		$data['super_admins'] = $this->db->getFetch($super_admin);
 		$data['super_admin']  = $this->db->getCount($super_admin);
 
 		$data['country'] = country();
@@ -435,8 +616,8 @@ class Super_admin extends Controller
 		if($check>0){
 		
 				$Data = array(
-					'name' 			=> $_POST['name'],
-					'email' 		=> $_POST['email'],
+					// 'name' 			=> $_POST['name'],
+					// 'email' 		=> $_POST['email'],
 					'password'		=> $newpassword,
 				);
 			$edit = $this->db->update('tbl_super_admin',$Data,array('id' => $id ));

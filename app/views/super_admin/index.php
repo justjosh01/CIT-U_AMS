@@ -5,7 +5,7 @@
           <!-- small box -->
           <div class="small-box bg-aqua" style="background: #F86B02 !important;">
             <div class="inner">
-              <h3><?=$data['alumni'];?></h3>
+              <h2><?=$data['alumni'];?></h2>
 
               <p>Alumni</p>
             </div>
@@ -20,7 +20,7 @@
           <!-- small box -->
           <div class="small-box bg-green" style="background: #FF770D !important;">
             <div class="inner">
-              <h3><?=$data['admins'];?></h3>
+               <h2><?=$data['admins'];?></h2>
 
               <p>Admins</p>
             </div>

@@ -56,41 +56,55 @@
             </div>
           </div> 
 
-          <div class="form-group">
-            <label for="date_of_birth" class="col-md-2 control-label">Date of Birth</label>
-              <div class="col-md-10">
-                <input type="date" id="date_of_birth" class="form-control" value="<?=isset($data['alumnus']['date_of_birth']) ? $data['alumnus']['date_of_birth'] : ''; ?>" name="date_of_birth">
-              </div>
-          </div>
+          
 
           <div class="form-group" >
-            <label class="col-md-2 control-label">Gender</label>
+            <label for="gender" class="col-md-2 control-label">Gender</label>
             <div class="col-md-10">
-              <select class="form-control" name="gender"  required>
-                <option></option>
-                <option <?=isset($data['alumnus']['gender']) && ($data['alumnus']['gender']=='Male') ? 'selected' : ''; ?> value="Male">Male</option>
-                <option <?=isset($data['alumnus']['gender']) && ($data['alumnus']['gender']=='Female') ? 'selected' : ''; ?> value="Female">Female</option>
- 
-                <option <?=isset($data['alumnus']['gender']) && ($data['alumnus']['gender']=='Others') ? 'selected' : ''; ?> value="Others">Others</option>
+               <select id="gender" class="form-control" name="gender" style="width: 100%;">
+                  <option value=""></option>
+                  <?php foreach ($data['gender'] as $key => $value) {
+
+                  $selected = ($data['alumnus']['gender']==$key) ? 'selected':'';
+                    
+                    echo '<option value="'.$key.'" '.$selected.'>'.$value.'</option>';
+                  } ?> 
+
               </select>
             </div>
           </div> 
 
           <div class="form-group">
+            <label for="date_of_birth" class="col-md-2 control-label">Date of Birth</label>
+              <div class="col-md-10">
+                 <input type="date" id="date_of_birth" name="date_of_birth" class="form-control" required placeholder="Date of Birth" value="<?=isset($data['alumnus']['date_of_birth']) ? $data['alumnus']['date_of_birth'] : ''; ?>" >
+              </div>
+          </div>
+
+          <div class="form-group">
             <label for="year_graduated" class="col-md-2 control-label">Year Graduated *</label>
               <div class="col-md-10">
-                <input type="year" id="year_graduated" class="form-control" value="<?=isset($data['alumnus']['year_graduated']) ? $data['alumnus']['year_graduated'] : ''; ?>" name="year_graduated">
+                 <select id="year_graduated" class="form-control" name="year_graduated" style="width: 100%;">
+                  <option value=""></option>
+                  <?php foreach ($data['year_graduated'] as $key => $value) {
+
+                  $selected = ($data['alumnus']['year_graduated']==$key) ? 'selected':'';
+                    
+                    echo '<option value="'.$key.'" '.$selected.'>'.$value.'</option>';
+                  } ?> 
+
+              </select>
               </div>
           </div>
 
           
-           <div class="form-group">
+          <div class="form-group">
             <div class="col-sm-offset-2 col-sm-10">
                
               <button type="submit" name="submit" class="btn btn-primary"><i class="fa fa-fw fa-save"></i> SAVE</button>
             </div>
           </div>
-        </div>
+        
         </form>
       </div>
         <!-- /.box-body -->

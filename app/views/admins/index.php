@@ -5,7 +5,7 @@
           <!-- AREA CHART -->
           <div class="box box-primary">
             <div class="box-header with-border">
-              <h3 class="box-title">Area Chart</h3>
+              <h3 class="box-title">Job Positions</h3>
 
              <!--  <div class="box-tools pull-right">
                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
@@ -25,7 +25,7 @@
           <!-- DONUT CHART -->
           <div class="box box-primary">
             <div class="box-header with-border">
-              <h3 class="box-title">Job Positions</h3>
+              <h3 class="box-title">Career Field</h3>
 
               <!-- <div class="box-tools pull-right">
                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>

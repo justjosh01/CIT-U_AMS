@@ -24,70 +24,29 @@
         <form class="form-horizontal" method="post" action="" role="form" enctype="multipart/form-data">
 
           <div class="form-group">
-            <label class="col-md-2 control-label">Admin ID * </label>
+            <label for="admin_id" class="col-md-2 control-label">Admin ID * </label>
             <div class="col-md-10">
-              <input type="text" name="admin_id" class="form-control" required placeholder="Admin ID" value="<?=isset($data['admin']['admin_id']) ? $data['admin']['admin_id'] : ''; ?>" readonly>
+              <input type="text" id="admin_id" name="admin_id" class="form-control" required placeholder="Admin ID" value="<?=isset($data['admin']['admin_id']) ? $data['admin']['admin_id'] : ''; ?>" readonly >
               
             </div>
           </div>
 
           <div class="form-group">
-            <label class="col-md-2 control-label">Full Name * </label>
+            <label for="name" class="col-md-2 control-label">Full Name * </label>
             <div class="col-md-10">
-              <input type="text" name="name" class="form-control" required placeholder="Full Name" value="<?=isset($data['admin']['name']) ? $data['admin']['name'] : ''; ?>" readonly>
+              <input type="text" id="name" name="name" class="form-control" required placeholder="Full Name" value="<?=isset($data['admin']['name']) ? $data['admin']['name'] : ''; ?>" readonly>
               
             </div>
           </div>
 
-          <div class="form-group">
-            <label class="col-md-2 control-label">Gender </label>
+          <div for="gender" class="form-group">
+            <label for="gender" class="col-md-2 control-label">Gender </label>
             <div class="col-md-10">
-              <input type="text" name="gender" class="form-control" required placeholder="Gender" value="<?=isset($data['admin']['gender']) ? $data['admin']['gender'] : ''; ?>" readonly>
-              
-            </div>
-          </div>
-
-          <div class="form-group">
-            <label class="col-md-2 control-label">Date of Birth </label>
-            <div class="col-md-10">
-              <input type="text" name="date_of_birth" class="form-control" required placeholder="Date of Birth" value="<?=isset($data['admin']['date_of_birth']) ? $data['admin']['date_of_birth'] : ''; ?>" readonly>
-              
-            </div>
-          </div>
-
-          <div class="form-group">
-            <label class="col-md-2 control-label">Contact Number </label>
-            <div class="col-md-10">
-              <input type="text" name="contact_number" class="form-control" required placeholder="Contact Number" value="<?=isset($data['admin']['contact_number']) ? $data['admin']['contact_number'] : ''; ?>" >
-              
-            </div>
-          </div>
-
-          <div class="form-group">
-            <label class="col-md-2 control-label">Department </label>
-            <div class="col-md-10">
-              <input type="text" name="department" class="form-control" required placeholder="Department" value="<?=isset($data['admin']['department']) ? $data['admin']['department'] : ''; ?>" >
-              
-            </div>
-          </div>
-
-          <div class="form-group">
-            <label class="col-md-2 control-label">Email * </label>
-            <div class="col-md-10">
-              <input type="email" name="email" class="form-control" required placeholder="Email Address" value="<?=isset($data['admin']['email']) ? $data['admin']['email'] : ''; ?>" readonly>
-              
-            </div>
-          </div>  
-
-          <!-- <div class="form-group">
-            <label class="col-md-2 control-label">Country * </label>
-            <div class="col-md-10">
-              <select class="form-control" name="location" style="width: 100%;">
+              <select id="gender" class="form-control" name="gender" style="width: 100%;">
                   <option value=""></option>
-                  <?php foreach ($data['country'] as $key => $value) {
+                  <?php foreach ($data['gender'] as $key => $value) {
 
-                  // $selected = ($key=='PH') ? 'selected':'';
-                  $selected = ($data['admin']['location']==$key) ? 'selected':'';
+                  $selected = ($data['admin']['gender']==$key) ? 'selected':'';
                     
                     echo '<option value="'.$key.'" '.$selected.'>'.$value.'</option>';
                   } ?> 
@@ -95,19 +54,77 @@
               </select>
               
             </div>
-          </div>  --> 
-                     <div class="form-group">
-            <label class="col-md-2 control-label">Change Password * </label>
+          </div>
+
+          <div class="form-group">
+            <label for="date_of_birth" class="col-md-2 control-label">Date of Birth </label>
             <div class="col-md-10">
-              <input type="password" name="newpassword" class="form-control"   placeholder="Enter only if you want to change the password" value="">
+              <input type="date" id="date_of_birth" name="date_of_birth" class="form-control" required placeholder="Date of Birth" value="<?=isset($data['admin']['date_of_birth']) ? $data['admin']['date_of_birth'] : ''; ?>" >
+              
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="contact_number" class="col-md-2 control-label">Contact Number </label>
+            <div class="col-md-10">
+              <input type="text" id="contact_number" name="contact_number" class="form-control" required placeholder="Contact Number" value="<?=isset($data['admin']['contact_number']) ? $data['admin']['contact_number'] : ''; ?>" >
+              
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="department" class="col-md-2 control-label">Department </label>
+            <div class="col-md-10">
+              <select id="department" class="form-control" name="department" style="width: 100%;">
+                  <option value=""></option>
+                  <?php foreach ($data['department'] as $key => $value) {
+
+
+                  $selected = ($data['admin']['department']==$key) ? 'selected':'';
+                    
+                    echo '<option value="'.$key.'" '.$selected.'>'.$value.'</option>';
+                  } ?> 
+
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="email" class="col-md-2 control-label">Email * </label>
+            <div class="col-md-10">
+              <input type="email" id="email" name="email" class="form-control" required placeholder="Email Address" value="<?=isset($data['admin']['email']) ? $data['admin']['email'] : ''; ?>" readonly>
+              
+            </div>
+          </div>  
+
+          <div class="form-group">
+            <label for="country" class="col-md-2 control-label">Country * </label>
+            <div class="col-md-10">
+              <select id="country" class="form-control" name="country" style="width: 100%;">
+                  <option value=""></option>
+                  <?php foreach ($data['country'] as $key => $value) {
+
+                  $selected = ($data['admin']['location']==$key) ? 'selected':'';
+                    
+                    echo '<option value="'.$key.'" '.$selected.'>'.$value.'</option>';
+                  } ?> 
+
+              </select>
+            </div>
+          </div>  
+
+          <div class="form-group">
+            <label for="newpassword"  class="col-md-2 control-label">Change Password * </label>
+            <div class="col-md-10">
+              <input type="password" id="newpassword" name="newpassword" class="form-control"   placeholder="Enter only if you want to change the password" value="">
                
               
             </div>
           </div>           
            <div class="form-group">
-            <label class="col-md-2 control-label">Confirm Password * </label>
+            <label for="confirmpassword" class="col-md-2 control-label">Confirm Password * </label>
             <div class="col-md-10">
-              <input type="password" name="confirmpassword" class="form-control" required placeholder="Confirm Password" value="">
+              <input type="password" id="confirmpassword" name="confirmpassword" class="form-control" required placeholder="Confirm Password" value="">
               <p class="help-block">Please confirm your current password to make changes to your profile.</p>
               
             </div>

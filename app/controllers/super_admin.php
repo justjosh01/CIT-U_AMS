@@ -46,13 +46,14 @@ class Super_admin extends Controller
 				'alumni_id' 	    => $_POST['alumni_id'],
 				'name' 				=> $_POST['name'],
 				'email' 			=> $_POST['email'],
-				'password' 			=> md5($_POST['alumni_id']),
+				'password' 			=> md5("CITU".$_POST['alumni_id']),
 				'contact_number' 	=> $_POST['contact_number'],
 				'date_of_birth' 	=> $_POST['date_of_birth'],
 				'gender' 			=> $_POST['gender'],
 				'year_graduated' 	=> $_POST['year_graduated'],
+				'tertiary'        => "Cebu Institute of Technology - University",
 				'type' 		=> "alumni",
-				'active' 	=> 1,
+				'active' 	=> 0,
 				'token'		=> md5($_POST['email'].uniqid(rand()))
 			);
 
@@ -67,14 +68,14 @@ class Super_admin extends Controller
 						$lastID = 1;
 					}
 
-				foreach ($_POST['career_field'] as $career_field) {
-					$Data = array(
-						'alumni'=> $lastID,
-						'career_field_id'=> $career_field
-					);
-					$add_career_field = $this->db->insert('tbl_salary_range' ,$Data);
-					// $edit = $this->db->update('tbl_image',$Data,array('id' => $image['id'] ));
-				}
+				// foreach ($_POST['career_field'] as $career_field) {
+				// 	$Data = array(
+				// 		'alumni'=> $lastID,
+				// 		'career_field_id'=> $career_field
+				// 	);
+				// 	$add_career_field = $this->db->insert('tbl_salary_range' ,$Data);
+				// 	// $edit = $this->db->update('tbl_image',$Data,array('id' => $image['id'] ));
+				// }
 
 				if($add){
 					$success[] =  "Save Succesfully!";
@@ -129,8 +130,9 @@ class Super_admin extends Controller
 
 							  if( $variable == 0    ){
 								$field = array(
-									'active'=>1,
+									'active'=>0,
 									'type'=>'alumni',
+
 									'alumni_id' => ($datax[0]),
 									'name'=>($datax[1]),
 									'email'=>($datax[2]),
@@ -138,8 +140,9 @@ class Super_admin extends Controller
 									'gender'=>($datax[4]),
 									'date_of_birth'=>($datax[5]),
 									'year_graduated'=>($datax[6]),
+
 									'tertiary'        => "Cebu Institute of Technology - University",
-									'password' =>md5(($datax[0])),
+									'password' =>md5("CITU".($datax[0])),
 									'token'    => md5(($datax[2])),
 									
 									);
@@ -196,7 +199,7 @@ class Super_admin extends Controller
 								'date_of_birth'=>($datax[5]),
 								'year_graduated'=>($datax[6]),
 								'tertiary'       => "Cebu Institute of Technology - University",
-								'password' =>md5(($datax[0])),
+								'password' =>md5("CITU".($datax[0])),
 								'token'    => md5(($datax[2]))
 
 								);

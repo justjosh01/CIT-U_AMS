@@ -78,7 +78,7 @@ class Page extends Controller
 
 		$data['admins'] = $this->db->getRows("tbl_admins");
 		$data['alumni'] = $this->db->getRows("tbl_alumni");
-		$data['transactions'] = $this->db->getQuery("SELECT * FROM tbl_announcements ORDER BY id DESC  LIMIT 1 ");
+		$data['announcements'] = $this->db->getQuery("SELECT * FROM tbl_announcements ORDER BY id DESC  LIMIT 1 ");
 		$data['events'] = $this->db->getQuery("SELECT * FROM tbl_events ORDER BY id  DESC LIMIT 10 ");
 	
 		$this->view('admins/main/header');

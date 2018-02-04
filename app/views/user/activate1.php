@@ -3,22 +3,22 @@
     <div style="margin-bottom:10px;padding-top: 10px;" align="center">
          <img src="<?=ASSETS;?>images/favicon.png" height="80px;"  class=""> 
       </div>
-    <a href=""><b>Alumni Monitoring System</b> <br>Forgot Password</a>
+    <a href=""><b>Alumni Monitoring System</b> <br>Activate Account</a>
   </div>
   <!-- /.login-logo -->
   <div class="login-box-body">
-    <p class="login-box-msg">Input email to reset your password</p>
+    <p class="login-box-msg">Input email to confirm your account</p>
 
 
     <?=isset($data['error']) ? error_message($data['error']):''; ;?>
     <?=isset($data['success']) ? success_message($data['success']):''; ;?>
 
    
-  
+  <?php $action = isset($this->url[0]) && $this->url[0] == 'alumni' && $this->url[1] == 'activate_account' ? URL_ROOT.'alumni/activate' : '';?>
 
-    <form action="" method="post">
+    <form action="<?=$action;?>" method="post">
       <div class="form-group has-feedback">
-        <input type="email" class="form-control" placeholder="Email" name="email" required>
+        <input type="email" class="form-control" placeholder="Email" name="email" required value="<?=isset($_POST['email']) ? $_POST['email']:'';?>">
         <span class="fa fa-envelope form-control-feedback"></span>
       </div>
  
@@ -35,17 +35,14 @@
       </div>
     </form>
 
+
   
     <a href="<?=URL_ROOT.$this->url[0];?>/login" class="text-center">I already have a Account</a><br>
 
 
-    <?php if($this->url[0]=='admins'): ?>
-    <a href="<?=URL_ROOT.$this->url[0];?>/register" class="text-center">Register an account</a>
-    
-    <?php endif; ?>
 
 
   </div>
-  <div style="text-align: center;margin-top: 10px;"><a href="<?=URL_ROOT;?>" class="text-center" >← Back to Dashboard</a></div>
+  <div style="text-align: center;margin-top: 30px;"><a href="<?=URL_ROOT;?>">← Back to Dashboard</a></div>
   <!-- /.login-box-body -->
 </div>

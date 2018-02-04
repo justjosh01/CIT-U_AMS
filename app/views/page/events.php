@@ -14,7 +14,7 @@
 	
 	<tr>
 		<td><?=$value['id'];?></td>
-		<td><?=($value['announcements_id']);?></td>
+		<!-- <td><?=($value['announcements_id']);?></td> -->
 		<td><?=$value['alumni_id'];?></td>
 		
 	</tr>

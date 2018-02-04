@@ -14,16 +14,18 @@
     <?=isset($data['success']) ? success_message($data['success']):''; ;?>
 
     <?php $action = isset($this->url[0]) && $this->url[0] == 'admins' && $this->url[1] == 'verify_email' ? URL_ROOT.'admins/login' : '';?>
-  
+
+    <?php $action = isset($this->url[0]) && $this->url[0] == 'alumni' && $this->url[1] == 'activate_account' ? URL_ROOT.'alumni/login' : '';?>
+
 
     <form action="<?=$action;?>" method="post">
       <div class="form-group has-feedback">
         <input type="email" class="form-control" placeholder="Email" name="email" required value="<?=isset($_POST['email']) ? $_POST['email']:'';?>">
-        <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+        <span class="fa fa-envelope form-control-feedback"></span>
       </div>
       <div class="form-group has-feedback">
         <input type="password" class="form-control" placeholder="Password" name="password" required >
-        <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+        <span class="fa fa-lock form-control-feedback"></span>
       </div>
       <div class="row">
         <div class="col-xs-8">
@@ -54,11 +56,11 @@
     <a href="<?=URL_ROOT.$this->url[0];?>/forgot_password" class="text-center">I forgot my password</a><br>
 
     <?php if($this->url[0]=='admins'): ?>
-    <a href="<?=URL_ROOT;?>admins/register" class="text-center">Register a new account</a>
+    <a href="<?=URL_ROOT.$this->url[0];?>/register" class="text-center">Register a new account</a>
     <?php endif; ?>
 
     <?php if($this->url[0]=='alumni'): ?>
-     <a href="<?=URL_ROOT;?>alumni/activate" class="text-center">Activate account</a>
+     <a href="<?=URL_ROOT.$this->url[0];?>/activate" class="text-center">Activate account</a>
     <?php endif; ?>
 
   </div>

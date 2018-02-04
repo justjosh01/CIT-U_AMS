@@ -12,7 +12,7 @@ $table = table($this->url[0]);
 			$data['count']	= $this->db->getCount($query);
 
 			if($data['count'] > 0){
-				redirect('admins/index');
+				redirect('alumni/index');
 			}else{
 				$data['errors'] = 'please try again';
 			}

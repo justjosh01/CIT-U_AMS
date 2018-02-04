@@ -39,7 +39,7 @@
           </tr>
           </thead>
           <tbody>
-          <?php foreach ($data['alumnus'] as $key => $value) { ?>
+          <?php foreach ($data['user'] as $key => $value) { ?>
           <tr>
 
             <td><?=($value['id']);?></td>

@@ -483,7 +483,7 @@ function year(){
 
 }
 
-function department(){
+function department(){//undone
 	$departmentList = array(
 		"IT"  => "Information Technology",
 		"CS"  => "Computer Science",
@@ -494,7 +494,7 @@ function department(){
 	return $departmentList;
 }
 
-function degree(){
+function degree(){//undone
 	$degreeList = array(
 	 	"BSIT"  => "Bachelor of Science in Information Technology",
 	 	"BSCS"  => "Bachelor of Science in Computer Science",
@@ -520,12 +520,12 @@ function salary_range(){
 
 function career_field(){
 	$career_fieldList = array(
+		"Human Services",
+		"Engineering, Manufacturing, & Technology", 
 		"Agriculture, Food, & Natural Resources",
 		"Business, Management, & Administration",
 		"Communications & Information Systems",
-		"Engineering, Manufacturing, & Technology",
-		"Health Science Technology",
-		"Human Services"
+		"Health Science Technology"
 	);
 	return $career_fieldList;
 }
@@ -584,8 +584,9 @@ function past_employment_status(){
 
 function employment_status(){
 	$employment_statusList = array(
-		"Employed"   => "Employed",
-		"Unemployed" => "Unemployed"
+		"Unemployed",
+		"Employed"
+		
 	);
 	return $employment_statusList;
 
@@ -594,8 +595,8 @@ function employment_status(){
 
 function gender(){
 	$genderList = array(
-	  "Male" => "Male",
 	  "Female" => "Female",
+	  "Male" => "Male",
 	  "Others" => "Others"
 	);
    return $genderList;

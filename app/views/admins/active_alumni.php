@@ -16,8 +16,8 @@
         <h3 class="box-title">Alumni</h3>
 
 
-        <?=add_button('super_admin/import_alumni','Import Alumni');?>&nbsp;
-        <?=add_button('super_admin/add_alumni','Add Alumni');?>
+        <?=add_button('admins/import_alumni','Import Alumni');?>&nbsp;
+        <?=add_button('admins/add_alumni','Add Alumni');?>
         
 
       </div>
@@ -43,8 +43,8 @@
             <td><?=ucwords($value['name']);?></td>
             <td><?=($value['email']);?></td>
             <td>
-              <?=update_button('super_admin/update_alumni',$value['id']);?>
-              <?=delete_button('super_admin/delete_alumni',$value['id']);?>
+              <?=update_button('admins/update_alumni',$value['id']);?>
+              <?=delete_button('admins/delete_alumni',$value['id']);?>
             </td>           
           </tr>
           <?php } ?> 

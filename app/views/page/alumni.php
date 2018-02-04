@@ -15,7 +15,22 @@
 		<td><?=$value['id'];?></td>
 		<td><?=strtolower($value['name']);?></td>
 		<td><?=$value['email'];?></td>
-		
+		<td><?=$value['date_forgot_password'];?></td>
+		<td>
+
+		<?php
+
+		if($value['active']==1){
+			echo 'active';
+		}else{
+			echo "<a target='_blank' href='".URL_ROOT."alumni/verify_email/".$value['token']."'>activate</a>";
+		}
+
+		?>
+			
+
+
+		</td>
 	</tr>
 		 
 	<?php } ?>

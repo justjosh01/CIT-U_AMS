@@ -19,7 +19,7 @@
     <form action="" method="post">
       <div class="form-group has-feedback">
         <input type="email" class="form-control" placeholder="Email" name="email" required>
-        <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+        <span class="fa fa-envelope form-control-feedback"></span>
       </div>
  
       <div class="row">
@@ -34,30 +34,13 @@
         <!-- /.col -->
       </div>
     </form>
-<!-- 
-    <div class="social-auth-links text-center">
-      <p>- OR -</p>
-      <a href="#" class="btn btn-block btn-social btn-facebook btn-flat"><i class="fa fa-facebook"></i> Sign in using
-        Facebook</a>
-      <a href="#" class="btn btn-block btn-social btn-google btn-flat"><i class="fa fa-google-plus"></i> Sign in using
-        Google+</a>
-    </div> -->
-    <!-- /.social-auth-links -->
 
   
     <a href="<?=URL_ROOT.$this->url[0];?>/login" class="text-center">I already have a Account</a><br>
 
 
-    <!-- <?php if($this->url[0]=='admins'): ?>
-      <a href="<?=URL_ROOT;?>admins/register" class="text-center">Register a new account</a>
-    <?php endif; ?>
-
-    <?php if($this->url[0]=='alumni'): ?>
-      <a href="<?=URL_ROOT;?>alumni/activate" class="text-center">Activate account</a>
-    <?php endif; ?> -->
-
 
   </div>
-  <div style="text-align: center;margin-top: 30px;"><a href="<?=URL_ROOT;?>">← Back to Dashboard</a></div>
+  <div style="text-align: center;margin-top: 10px;"><a href="<?=URL_ROOT;?>" class="text-center" >← Back to Dashboard</a></div>
   <!-- /.login-box-body -->
 </div>

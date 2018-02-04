@@ -14,16 +14,53 @@ class Admins extends Controller
  		is_loggedin();
 		$alumni 			= "SELECT * FROM tbl_alumni";
  		$data['alumnus']		= $this->db->getQuery($alumni);
-		$data['alumni']	= $this->db->getCount($alumni);
+		$data['alumni']	    = $this->db->getCount($alumni);
 		$admins 			= "SELECT * FROM tbl_admins";
  		$data['admins']		= $this->db->getCount($admins);
+
+ 		$active             = "SELECT * FROM tbl_alumni WHERE active='1'";
+ 		$data['active']     = $this->db->getCount($active);
+ 		$inactive             = "SELECT * FROM tbl_alumni WHERE active='0'";
+ 		$data['inactive']     = $this->db->getCount($inactive);
+
+ 		$countA 			= "SELECT * FROM tbl_alumni WHERE career_field='0'";
+ 		$data['countA']		= $this->db->getCount($countA);
+ 		$countB 			= "SELECT * FROM tbl_alumni WHERE career_field='1'";
+ 		$data['countB']		= $this->db->getCount($countB);
+ 		$countC 			= "SELECT * FROM tbl_alumni WHERE career_field='2'";
+ 		$data['countC']		= $this->db->getCount($countC);
+ 		$countD 			= "SELECT * FROM tbl_alumni WHERE career_field='3'";
+ 		$data['countD']		= $this->db->getCount($countD);
+ 		$countE 			= "SELECT * FROM tbl_alumni WHERE career_field='4'";
+ 		$data['countE']		= $this->db->getCount($countE);
+ 		$countF 			= "SELECT * FROM tbl_alumni WHERE career_field='5'";
+ 		$data['countF']		= $this->db->getCount($countF);
+
+ 		$unemployed         = "SELECT * FROM tbl_alumni WHERE employment_status='0'";
+ 		$data['unemployed'] = $this->db->getCount($unemployed);
+ 		$employed           = "SELECT * FROM tbl_alumni WHERE employment_status='1'";
+ 		$data['employed']   = $this->db->getCount($employed);
+
+ 		$salaryA            = "SELECT * FROM tbl_alumni WHERE salary_range='0'";
+ 		$data['salaryA']	= $this->db->getCount($salaryA);
+ 		$salaryB            = "SELECT * FROM tbl_alumni WHERE salary_range='1'";
+ 		$data['salaryB']	= $this->db->getCount($salaryB);
+ 		$salaryC            = "SELECT * FROM tbl_alumni WHERE salary_range='2'";
+ 		$data['salaryC']	= $this->db->getCount($salaryC);
+ 		$salaryD            = "SELECT * FROM tbl_alumni WHERE salary_range='3'";
+ 		$data['salaryD']	= $this->db->getCount($salaryD);
+ 		$salaryE            = "SELECT * FROM tbl_alumni WHERE salary_range='4'";
+ 		$data['salaryE']	= $this->db->getCount($salaryE);
+ 		$salaryF            = "SELECT * FROM tbl_alumni WHERE salary_range='5'";
+ 		$data['salaryF']	= $this->db->getCount($salaryF);
+
 		// $announcements 			= "SELECT * FROM tbl_announcements";
  	// 	$data['announcements']	= $this->db->getCount($announcements);
 		// $events 		= "SELECT * FROM tbl_events	";
  	// 	$data['events']	= $this->db->getCount($events);
 		$this->view('admins/header',$data);
 		$this->view('admins/index',$data);
-		$this->view('admins/footer');
+		$this->view('admins/footer',$data);
 	}	
 
 	public function alumni(){
@@ -32,10 +69,36 @@ class Admins extends Controller
 		is_admin();
 		is_loggedin();
 		$query 			= "SELECT * FROM tbl_alumni";
- 		$data['alumnus']	= $this->db->getQuery($query);
-		$data['alumni']	= $this->db->getCount($query);
+ 		$data['user']	= $this->db->getQuery($query);
+		$data['count']	= $this->db->getCount($query);
 		$this->view('admins/header',$data);
 		$this->view('admins/alumni',$data);
+		$this->view('admins/footer');
+	}
+
+	public function active_alumni(){
+
+		$data['title'] = 'Active Alumni';
+		is_admin();
+		is_loggedin();
+		$query 			= "SELECT * FROM tbl_alumni WHERE active='1'";
+ 		$data['user']	= $this->db->getQuery($query);
+		$data['count']	= $this->db->getCount($query);
+		$this->view('admins/header',$data);
+		$this->view('admins/active_alumni',$data);
+		$this->view('admins/footer');
+	}
+
+	public function inactive_alumni(){
+
+		$data['title'] = 'Inactive Alumni';
+		is_admin();
+		is_loggedin();
+		$query 			= "SELECT * FROM tbl_alumni WHERE active='0'";
+ 		$data['user']	= $this->db->getQuery($query);
+		$data['count']	= $this->db->getCount($query);
+		$this->view('admins/header',$data);
+		$this->view('admins/inactive_alumni',$data);
 		$this->view('admins/footer');
 	}
 
@@ -411,10 +474,14 @@ class Admins extends Controller
 		$data['title'] = 'Sign Up';
 			if (isset($_POST['submit']) )  {
 				$Data = array(
+					'admin_id'      => $_POST['admin_id'],
 					'name' 			=> $_POST['name'],
+					'gender'		=> $_POST['gender'],
+					'date_of_birth'	=> $_POST['date_of_birth'],
 					'email' 		=> $_POST['email'],
 					'contact_number'=> $_POST['contact_number'],
-					'address' 		=> $_POST['address'],
+					'department' 	=> $_POST['department'],
+					'location'		=> $_POST['location'],
 					'password' 		=> md5($_POST['password']),
 					'type' 			=> "admins",
 					'token'			=> md5($_POST['email'].uniqid(rand()))

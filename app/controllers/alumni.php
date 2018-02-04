@@ -17,6 +17,50 @@ class Alumni extends Controller
 		$this->view('alumni/index',$data);
 		$this->view('alumni/footer');
 	}
+
+
+	public function activate(){
+		 	 
+		$data['title'] = 'Activate';
+		if(isset($_POST['submit'])){
+			$table = table($this->url[0]);
+			$query = "SELECT id,email,name,type,token, active FROM tbl_alumni WHERE  email ='". $_POST['email']."' ";
+ 			$data['user']	= $this->db->getFetch($query);
+			$data['count']	= $this->db->getCount($query);
+			activate_account($data['user']['email'], $data['user']['name'], $data['user']['token'], $data['user']['type']);
+			if($data['count']==1 && $data['user']['active']==0){
+				$success[] 		=  "Please check your email and click on the link provided to activate your account.";
+				$data['success']= $success;
+			}elseif($data['user']['active']==1){
+				$error[] =  "Email already active";
+				$data['error'] = $error;
+			}else{
+				$error[] =  "Email doesn't exists";
+				$data['error'] = $error;
+			}
+		}
+		$this->view('alumni/main/header');
+		$this->view('alumni/activate',$data);
+		$this->view('alumni/main/footer'); 
+	}
+	
+	public function activate_account(){
+		 
+		isset($this->url[2]) ? '':redirect('/');
+		$Data 		= array('active' => 1, 'date_activated' => date("Y-m-d H:i:s"));
+		$condition 	= array('token' => $this->url[2] );
+		$edit = $this->db->update('tbl_alumni',$Data,$condition);
+		if($edit){
+			$success[] =  "Account activated you can now login!";
+			$data['success'] = $success;
+				$this->view('alumni/main/header');
+				$this->view('alumni/login',$data);
+				$this->view('alumni/main/footer');
+			
+		} 
+
+
+	}
  
 
 	public function announcements(){
@@ -218,8 +262,6 @@ class Alumni extends Controller
 	}
 
 
-
-
 	public function forgot_password(){
 		 	 
 		$data['title'] = 'Forgot Password';
@@ -248,16 +290,18 @@ class Alumni extends Controller
 	public function reset_password(){
 		$data['title'] = 'Reset Password';
 		$id = d($this->url[0]);
-		$alumni 		= "SELECT * FROM tbl_alumni WHERE id='".$id."' ";
- 		$data['alumni']= $this->db->getCount($alumni);
-		$data['alumnus']	= $this->db->getFetch($alumni);
-		if($data['alumnus']['date_forgot_password']=='0000-00-00 00:00:00'){
+		$query 		= "SELECT * FROM tbl_alumni WHERE id='".$id."' ";
+		$data['user']	= $this->db->getFetch($query);
+		$data['count']	= $this->db->getCount($query);
+		if($data['user']['date_forgot_password']=='0000-00-00 00:00:00'){
 			redirect('alumni/login');
 		}
 
 		if(isset($_POST['submit'])){
 			if($_POST['new_password']==$_POST['confirm_password']){
-				$edit = $this->db->update('tbl_alumni',array('password' => md5($_POST['new_password']),'date_forgot_password' => '0000-00-00 00:00:00' ),array('id'=>$id));
+				$Data = array('password' => md5($_POST['new_password']),'date_forgot_password' => '0000-00-00 00:00:00' );
+				$condition = array('id'=>$data['user']['id']);
+				$edit = $this->db->update('tbl_alumni', $Data, $condition);
 				if($edit){
 					$success[] =  "Save Succesfully!";
 					$data['success'] = $success;

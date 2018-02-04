@@ -19,18 +19,35 @@
         ?>
     <form action="" method="post">
       <div class="form-group has-feedback">
+        <input type="text" class="form-control" placeholder="Admin ID" name="admin_id" required>
+        <span class="fa fa-qrcode form-control-feedback"></span>
+      </div>
+      <div class="form-group has-feedback">
         <input type="text" class="form-control" placeholder="Full name" name="name" required>
-        <span class="glyphicon glyphicon-user form-control-feedback"></span>
+        <span class="fa fa-user form-control-feedback"></span>
+      </div>
+      <div class="form-group has-feedback">
+        <input type="text" class="form-control" placeholder="Gender" name="gender" required>
+        <span class="fa fa-tag form-control-feedback"></span>
+      </div>
+      <div class="form-group has-feedback">
+        <input type="text" class="form-control" placeholder="Date of birth" name="date_of_birth" required>
+        <span class="fa fa-calendar form-control-feedback"></span>
       </div>
       <div class="form-group has-feedback">
         <input type="email" class="form-control" placeholder="Email" name="email" required>
-        <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+        <span class="fa fa-envelope form-control-feedback"></span>
       </div>
 
       <div class="form-group has-feedback">
         <input type="text" class="form-control" placeholder="Contact Number" name="contact_number" required>
-        <span class="glyphicon glyphicon-phone form-control-feedback"></span>
+        <span class="fa fa-phone form-control-feedback"></span>
       </div>
+      <div class="form-group has-feedback">
+        <input type="text" class="form-control" placeholder="Department" name="department" required>
+        <span class="fa fa-institution form-control-feedback"></span>
+      </div>
+
 
 
       <div class="form-group has-feedback">
@@ -56,11 +73,11 @@
 
       <div class="form-group has-feedback">
         <input type="password" class="form-control" placeholder="Password" name="password" required>
-        <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+        <span class="fa fa-lock form-control-feedback"></span>
       </div>
       <div class="form-group has-feedback">
         <input type="password" class="form-control" placeholder="Retype password" name="confirm_password" required>
-        <span class="glyphicon glyphicon-log-in form-control-feedback"></span>
+        <span class="fa fa-sign-in form-control-feedback"></span>
       </div>
 
 

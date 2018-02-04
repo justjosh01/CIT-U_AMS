@@ -26,7 +26,7 @@
 
 
 <!-- <div style="float: right;"> -->
- <!-- <?=$this->view('page/transactions',$data);?>  -->
+ <!-- <?=$this->view('page/announcements',$data);?>  -->
 <!-- </div> -->
 
  
